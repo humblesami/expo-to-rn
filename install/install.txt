@@ -1,0 +1,173 @@
+Install JAVA
+
+https://www.oracle.com/kw/java/technologies/javase/jdk11-archive-downloads.html#license-lightbox
+
+Jdk11 (.deb file for ubuntu)
+Should be installed here by default
+/usr/lib/jvm/java-11-openjdk-amd64
+
+Install SDK
+
+https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+
+Install at home => ~/Android/Sdk (should go here by default)
+
+cd ~/Android/Sdk
+Install any package as
+./cmdline-tools/latest/bin/sdkmanager packagename
+
+Example:
+./cmdline-tools/latest/bin/sdkmanager tools
+./cmdline-tools/latest/bin/sdkmanager platform-tools
+
+Add To path
+
+nano ~/.bashrc
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
+export PATH=${PATH}:/home/sami/Android/Sdk/platform-tools
+source ~/.bashrc
+
+https://reactnative.dev/docs/environment-setup?guide=native
+
+npm uninstall -g react-native-cli
+npx react-native init project_name
+
+
+
+USB
+adb reverse tcp:8000 tcp:8000
+
+If above gives any error or no response at all then
+For troubleshooting
+
+lsub
+adb devices
+adb -s copydeviceidshown reverse tcp:8000 tcp:8000
+
+Run
+#npm run android
+npx react-native run-android
+npx react-native start
+Press r to run on android
+react-native start --reset-cache
+
+
+adb start-server
+yarn add expo-cli
+npx expo start --localhost --android
+
+expo start --localhost --android
+
+
+—-----------
+
+
+Icons
+https://romannurik.github.io/AndroidAssetStudio/icons-launcher.html#foreground.type=image&foreground.space.trim=1&foreground.space.pad=0.25&foreColor=rgba(96%2C%20125%2C%20139%2C%200)&backColor=rgb(68%2C%20138%2C%20255)&crop=0&backgroundShape=circle&effects=none&name=ic_launcher
+
+https://www.educba.com/react-native-vector-icons
+
+
+
+Install
+yarn global remove react-native-cli
+npm uninstall -g react-native-cli
+yarn global add react-native-cli
+
+
+ReBuild/Clean
+
+cd android && ./gradlew clean && cd ..
+
+APK
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
+
+Packages
+
+yarn add react-native-gesture-handler && react-native link
+
+
+Old app
+
+In app.json
+"name":"app",
+"displayName":"Chat App",
+
+npx react-native upgrade --legacy true
+yarn add react-native-eject
+npx install-expo-modules
+npx react-native eject
+
+Add local.properties file
+Having content =>
+sdk.dir = /home/sami/Android/Sdk
+To project/android folder
+
+
+Keytool (Sha1)
+keytool -list -v -keystore android/app/debug.keystore -alias androiddebugkey -storepass android -keypass android
+keytool -importkeystore -srckeystore android/app/debug.keystore -destkeystore android/app/debug.keystore -deststoretype pkcs12
+
+NoClassFound
+sudo apt-get autoremove openjdk*
+sudo apt-get install openjdk-8-jdk
+
+TODO
+Geo location
+https://reactnative.dev/docs/0.63/geolocation
+https://www.npmjs.com/package/react-native-google-places-autocomplete
+
+
+FCM Firebase Cloud
+Firebase Setting 1:
+https://console.firebase.google.com/project/push-4cb3e/settings/cloudmessaging
+
+Google Cloud Console API keys
+
+https://console.cloud.google.com/apis/credentials?pli=1&project=push-4cb3e
+
+Com.hope.tts settings
+
+https://console.firebase.google.com/project/push-4cb3e/settings/general/android:com.hope.tts
+
+
+Expo links
+API Keys Test Credentials:
+https://expo.dev/accounts/humblesami/projects/HopeEfforts/credentials/android/legacy
+
+Guide1:
+https://docs.expo.dev/push-notifications/push-notifications-setup/#android
+
+Guide2:
+https://docs.expo.dev/push-notifications/sending-notifications-custom/
+
+
+
+Expo Push Notifications
+expo push:android:upload --api-key server-key from Firebase Setting1
+
+
+
+Release APK
+
+./gradlew clean && ./gradlew assembleRelease
+
+
+============================================
+
+expo push:android:upload --api-key AAAAESHut6U:APA91bEsZhDfm-b8GfZMVGXbkn_diHmwjim7tZH4riFMBwJQftx5JAspq5gL4yI7cfXY5G5rcAOHmhzCD8GKlWGaBF7RGuVH_ienZm8u3JUR4QD5icoZcpJlxnFXN8kIM2zdbnD0xLpj
+
+===========================================
+Publish
+
+Key Store
+keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+Password    =>      sami92
+Info        =>      CN=Sami Akram, OU=92news, O=92news, L=Lahore, ST=Punjab, C=pk
+
+eas build
+
+============================================
