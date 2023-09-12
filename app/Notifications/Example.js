@@ -23,31 +23,35 @@ export default class NotificationScreen extends React.Component {
 		);
 	}
 	
+	mounted = 0;
 	async componentDidMount(){
-		this.registerForPushNotificationsAsync();
+		if(!this.mounted)
+		{
+			this.mounted = 1;
+			this.registerForPushNotificationsAsync();			
+		}
 	}
 
 	async registerForPushNotificationsAsync(mannual=0) {
         let token;
-        const {status} = await ExpoNotifications.getPermissionsAsync();		
-        console.log('Notification permission status', status);
+        const {status} = await ExpoNotifications.getPermissionsAsync();
         let finalStatus = status;
         if (finalStatus !== 'granted') {			
             const { status } = await ExpoNotifications.requestPermissionsAsync();			
             finalStatus = status;
         }
+		console.log('Notification permission status', status);
         if (finalStatus !== 'granted') {
             return 'Error: 403  not permitted';;
         }
-		else{
+		else{			
 			if(mannual == 1){
 				this.setState({notifications_permitted: true});
 			}
 			else{
 				this.state.notifications_permitted = true;
 			}
-		}
-		console.log('Notification permission status', status);
+		}		
         try{
             let expo_token = await ExpoNotifications.getExpoPushTokenAsync();
             token = expo_token.data;
@@ -64,7 +68,7 @@ export default class NotificationScreen extends React.Component {
 		return (
 			<View style={styles.container}>
 				<Text style={styles.title}>
-					Example of app react-native-push-notification
+					Set Alarm
 				</Text>
 				<View style={styles.spacer}></View>
 				<TextInput
@@ -77,14 +81,14 @@ export default class NotificationScreen extends React.Component {
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
-						this.notif.localNotif();
+						this.notif.makeLocalNotification();
 					}}>
 					<Text>Local Notification (now)</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
-						this.notif.localNotif('as2.wav');
+						this.notif.makeLocalNotification('s4.mp3');
 					}}>
 					<Text>Local Notification with sound (now)</Text>
 				</TouchableOpacity>
@@ -139,13 +143,6 @@ export default class NotificationScreen extends React.Component {
 						this.notif.getDeliveredNotifications(notifs => console.log(notifs));
 					}}>
 					<Text>Console.Log Delivered Notifications</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => {
-						this.notif.createOrUpdateChannel();
-					}}>
-					<Text>Create or update a channel</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.button}

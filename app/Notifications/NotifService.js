@@ -16,58 +16,44 @@ export default class NotifService {
 			if (number > 0) {
 				PushNotification.setApplicationIconBadgeNumber(0);
 			}
-		});
-
-		PushNotification.getChannels(function (channels) {
-			console.log(channels);
-		});
+		});		
 	}
 
 	createDefaultChannels() {
-		PushNotification.createChannel({
+		let default_options = {
 			channelId: "default-channel-id", // (required)
 			channelName: `Default channel`, // (required)
 			channelDescription: "A default channel", // (optional) default: undefined.
 			soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
 			importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
 			vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-		}, (created) => {
-			// (optional) callback returns whether the channel was created, false means it already existed.
-			console.log(`createChannel 'default-channel-id' returned '${created}'`)
-		});
-		PushNotification.createChannel({
-			channelId: "sound-channel-id", // (required)
-			channelName: `Sound channel`, // (required)
-			channelDescription: "A sound channel", // (optional) default: undefined.
-			soundName: "as2.wav", // (optional) See `soundName` parameter of `localNotification` function
-			importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-			vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-		}, (created) => {
-			// (optional) callback returns whether the channel was created, false means it already existed.
-			console.log(`createChannel 'sound-channel-id' returned '${created}'`)
-		});
-	}
+		};
 
-	createOrUpdateChannel() {
-		this.lastChannelCounter++;
-		PushNotification.createChannel({
-			channelId: "custom-channel-id", // (required)
-			channelName: `Custom channel - Counter: ${this.lastChannelCounter}`, // (required)
-			channelDescription: `A custom channel to categorise your custom notifications. Updated at: ${Date.now()}`, // (optional) default: undefined.
-			soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
-			importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
-			vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
-		},(created) => {
-			console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-		});
+		let custom_options = [
+			{}, 
+			{channelId:'sound-channel-id', channelDescription:'Sound', channelName: 'Sound channel', soundName: 's4.mp3'},
+		];
+
+		for(let channel_options of custom_options){
+			let newChannel = {};
+			for(let item in default_options){ newChannel[item] = default_options[ item]};
+			for(let item in channel_options){ newChannel[item] = channel_options[ item]};
+			PushNotification.createChannel(newChannel);			
+			console.log(newChannel);
+		}
+
+		// PushNotification.getChannels(function (channels) {
+		// 	console.log(channels);
+		// });
 	}
 
 	popInitialNotification() {
 		PushNotification.popInitialNotification((notification) => console.log('InitialNotication:', notification));
 	}
 
-	localNotif(soundName) {
+	makeLocalNotification(soundName) {
 		this.lastId++;
+		console.log(333, soundName, soundName ? 'sound-channel-id' : 'default-channel-id', 444);
 		PushNotification.localNotification({
 			/* Android Only Properties */
 			channelId: soundName ? 'sound-channel-id' : 'default-channel-id',
@@ -88,8 +74,8 @@ export default class NotifService {
 			invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
 			when: null, // (optionnal) Add a timestamp pertaining to the notification (usually the time the event occurred). For apps targeting Build.VERSION_CODES.N and above, this time is not shown anymore by default and must be opted into by using `showWhen`, default: null.
-			usesChronometer: false, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
-			timeoutAfter: null, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
+			usesChronometer: true, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
+			timeoutAfter: 2000, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
 
 			/* iOS only properties */
 			category: '', // (optional) default: empty string
@@ -127,11 +113,11 @@ export default class NotifService {
 			groupSummary: false, // (optional) set this notification to be the group summary for a group of notifications, default: false
 			ongoing: false, // (optional) set whether this is an "ongoing" notification
 			actions: ['Yes', 'No'], // (Android only) See the doc for notification actions to know more
-			invokeApp: false, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
+			invokeApp: true, // (optional) This enable click on actions to bring back the application to foreground or stay in background, default: true
 
 			when: null, // (optionnal) Add a timestamp pertaining to the notification (usually the time the event occurred). For apps targeting Build.VERSION_CODES.N and above, this time is not shown anymore by default and must be opted into by using `showWhen`, default: null.
-			usesChronometer: false, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
-			timeoutAfter: null, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
+			usesChronometer: true, // (optional) Show the `when` field as a stopwatch. Instead of presenting `when` as a timestamp, the notification will show an automatically updating display of the minutes and seconds since when. Useful when showing an elapsed time (like an ongoing phone call), default: false.
+			timeoutAfter: 2000, // (optional) Specifies a duration in milliseconds after which this notification should be canceled, if it is not already canceled, default: null
 
 			/* iOS only properties */
 			category: '', // (optional) default: empty string
