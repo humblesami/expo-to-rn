@@ -39,7 +39,7 @@ export default class NotifService {
 			channelId: "sound-channel-id", // (required)
 			channelName: `Sound channel`, // (required)
 			channelDescription: "A sound channel", // (optional) default: undefined.
-			soundName: "sample.mp3", // (optional) See `soundName` parameter of `localNotification` function
+			soundName: "as2.wav", // (optional) See `soundName` parameter of `localNotification` function
 			importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
 			vibrate: true, // (optional) default: true. Creates the default vibration pattern if true.
 		}, (created) => {

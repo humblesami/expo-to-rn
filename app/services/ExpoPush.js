@@ -1,12 +1,12 @@
 import React from 'react';
-import * as Notifications from 'expo-notifications';
+import * as ExpoNotifications from 'expo-notifications';
 import rnStorage from './rnStorage';
 import { AjaxClient } from './ajax';
 import LoaderElement from './LoaderElement';
 import Statemanager from './asyncActivitiesTrack';
 
 
-Notifications.setNotificationHandler({
+ExpoNotifications.setNotificationHandler({
     handleNotification: async () => ({
         shouldShowAlert: true,
         shouldPlaySound: true,
@@ -40,25 +40,25 @@ export default class ExpoPush extends React.Component {
 
     async registerForPushNotificationsAsync() {
         let token;
-        const {status} = await Notifications.getPermissionsAsync();
+        const {status} = await ExpoNotifications.getPermissionsAsync();
         console.log('Notification permission status', status);
         let finalStatus = status;
         if (finalStatus !== 'granted') {
-            const { status } = await Notifications.requestPermissionsAsync();
+            const { status } = await ExpoNotifications.requestPermissionsAsync();
             finalStatus = status;
         }
         if (finalStatus !== 'granted') {
-            return 'Error: 403 Notifications not permitted';;
+            return 'Error: 403  not permitted';;
         }
         try{
-            let expo_token = await Notifications.getExpoPushTokenAsync();
+            let expo_token = await ExpoNotifications.getExpoPushTokenAsync();
             token = expo_token.data;
             //console.log('Obtained Push Token: '+token);
             return token;
         }
         catch(er){
-            console.log('Full error in getExpoPushTokenAsync', er);
-            return 'Error: Failed at Notifications.getExpoPushTokenAsync';
+            //console.log('Full error in getExpoPushTokenAsync', er);
+            return 'Error: Failed at .getExpoPushTokenAsync';
         }
     }
 
@@ -85,7 +85,7 @@ export default class ExpoPush extends React.Component {
         if(this.mounted) this.setState({});
         obj_this.submit_token(pushToken);
 
-        this.pushListener = Notifications.addNotificationReceivedListener(notification => {
+        this.pushListener = ExpoNotifications.addNotificationReceivedListener(notification => {
             const { data, body } = notification.request.content;
             let message = body.trim();
             let channel = notification.request.trigger.channelId;
@@ -93,18 +93,18 @@ export default class ExpoPush extends React.Component {
             console.log("\n", notification);
             return notification.request.content.categoryIdentifier;
         });
-        this.resListener = Notifications.addNotificationResponseReceivedListener(response => response.notification.request.content);
+        this.resListener = ExpoNotifications.addNotificationResponseReceivedListener(response => response.notification.request.content);
 
-        //this.test_notifications();
+        this.test_notifications();
 
         return () => {
-            Notifications.removeNotificationSubscription(obj_this.pushListener);
-            Notifications.removeNotificationSubscription(obj_this.resListener);
+            ExpoNotifications.removeNotificationSubscription(obj_this.pushListener);
+            ExpoNotifications.removeNotificationSubscription(obj_this.resListener);
         };
     }
 
     test_notifications() {
-        Notifications.scheduleNotificationAsync({
+        ExpoNotifications.scheduleNotificationAsync({
             content: {
                 title: "You've got mail!",
                 body: 'Open the notification to read them all',
@@ -161,7 +161,7 @@ export default class ExpoPush extends React.Component {
             console.log('onTokenRegistered is not implmented');
         }
         let channel_options = {
-            importance: Notifications.AndroidImportance.MAX,
+            importance: ExpoNotifications.AndroidImportance.MAX,
             vibrationPattern: [0, 250, 250, 250],
             lightColor: '#FF231F7C',
         }     
@@ -172,8 +172,8 @@ export default class ExpoPush extends React.Component {
                 channel_options1[key] = channel_options[key];
                 channel_options2[key] = channel_options[key];
             });
-            Notifications.setNotificationChannelAsync(channel_options1.name, channel_options1);
-            Notifications.setNotificationChannelAsync(channel_options2.name, channel_options2);            
+            ExpoNotifications.setNotificationChannelAsync(channel_options1.name, channel_options1);
+            ExpoNotifications.setNotificationChannelAsync(channel_options2.name, channel_options2);            
         }
     }
 

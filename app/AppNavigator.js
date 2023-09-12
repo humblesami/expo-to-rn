@@ -12,8 +12,10 @@ import AboutSreen from './Screens/AboutSreen';
 import ListingScreen from './Screens/ListScreen';
 import StateChangeonFocus from './Screens/TestingScreen';
 import NotificationScreen from './Notifications/Example';
-import { NavigationContainer } from '@react-navigation/native';
+
+
 import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const StackNavigator1 = () => {
@@ -48,9 +50,9 @@ function get_tab_options(label, icon='home', color1 = 'green', tbb = 0) {
 const TabNavigator1 = () => {    
     return(
         <Tab1.Navigator>
+            <Tab1.Screen name="Notifications" component={NotificationScreen} options={get_tab_options('Notifications', 'heart')}  />
             <Tab1.Screen name="TestTab" component={StateChangeonFocus} options={get_tab_options('ChanginStateApi', 'timer')}  />
-            <Tab1.Screen name="MenuTab" component={StackNavigator1} options={get_tab_options('Main Menu', 'menu')}  />
-            <Tab1.Screen name="Notifications" component={NotificationScreen} options={get_tab_options('Notifications', 'heart')}  />                        
+            <Tab1.Screen name="MenuTab" component={StackNavigator1} options={get_tab_options('Main Menu', 'menu')}  />            
         </Tab1.Navigator>
     );
 }

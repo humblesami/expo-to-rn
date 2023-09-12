@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
 	TextInput,
 	StyleSheet,
@@ -8,17 +8,57 @@ import {
 	Alert,
 } from 'react-native';
 import NotifService from './NotifService';
+import * as ExpoNotifications from 'expo-notifications';
 
-export default class NotificationScreen extends Component {
+export default class NotificationScreen extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {};
+		this.state = {
+			notifications_permitted: false
+		};
 
 		this.notif = new NotifService(
 			this.onRegister.bind(this),
 			this.onNotif.bind(this),
 		);
 	}
+	
+	async componentDidMount(){
+		this.registerForPushNotificationsAsync();
+	}
+
+	async registerForPushNotificationsAsync(mannual=0) {
+        let token;
+        const {status} = await ExpoNotifications.getPermissionsAsync();		
+        console.log('Notification permission status', status);
+        let finalStatus = status;
+        if (finalStatus !== 'granted') {			
+            const { status } = await ExpoNotifications.requestPermissionsAsync();			
+            finalStatus = status;
+        }
+        if (finalStatus !== 'granted') {
+            return 'Error: 403  not permitted';;
+        }
+		else{
+			if(mannual == 1){
+				this.setState({notifications_permitted: true});
+			}
+			else{
+				this.state.notifications_permitted = true;
+			}
+		}
+		console.log('Notification permission status', status);
+        try{
+            let expo_token = await ExpoNotifications.getExpoPushTokenAsync();
+            token = expo_token.data;
+            console.log('Obtained Push Token: '+token);
+            return token;
+        }
+        catch(er){
+            //console.log('Full error in getExpoPushTokenAsync', er);
+            return 'Error: Failed at .getExpoPushTokenAsync';
+        }
+    }
 
 	render() {
 		return (
@@ -44,7 +84,7 @@ export default class NotificationScreen extends Component {
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
-						this.notif.localNotif('sample.mp3');
+						this.notif.localNotif('as2.wav');
 					}}>
 					<Text>Local Notification with sound (now)</Text>
 				</TouchableOpacity>
@@ -58,7 +98,7 @@ export default class NotificationScreen extends Component {
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
-						this.notif.scheduleNotif('sample.mp3');
+						this.notif.scheduleNotif('as2.wav');
 					}}>
 					<Text>Schedule Notification with sound in 30s</Text>
 				</TouchableOpacity>
@@ -83,27 +123,16 @@ export default class NotificationScreen extends Component {
 					}}>
 					<Text>Check Permission</Text>
 				</TouchableOpacity>
+				{
+				!this.state.notifications_permitted ? 
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
-						this.notif.requestPermissions();
+						this.registerForPushNotificationsAsync(1);
 					}}>
 					<Text>Request Permissions</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => {
-						this.notif.abandonPermissions();
-					}}>
-					<Text>Abandon Permissions</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={styles.button}
-					onPress={() => {
-						this.notif.getScheduledLocalNotifications(notifs => console.log(notifs));
-					}}>
-					<Text>Console.Log Scheduled Local Notifications</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> : <></>
+				}
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
