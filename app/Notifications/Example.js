@@ -97,14 +97,14 @@ export default class NotificationScreen extends React.Component {
 					onPress={() => {
 						this.notif.scheduleNotif();
 					}}>
-					<Text>Schedule Notification in 30s</Text>
+					<Text>Schedule Notification in 10s</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {
 						this.notif.scheduleNotif('as2.wav');
 					}}>
-					<Text>Schedule Notification with sound in 30s</Text>
+					<Text>Schedule Notification with sound in 10s</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.button}
