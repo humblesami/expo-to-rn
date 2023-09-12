@@ -39,16 +39,13 @@ function TestingScreen() {
 			</Text>
 			</Text>
 
-
 			<Text>
 				Previous access: <Text style={styles.time}>{state_vars.lastAccess}</Text>
 			</Text>
 
 			<Text>
 				Current Access : <Text style={styles.time}>{state_vars.now}</Text>
-			</Text>
-
-			
+			</Text>			
 		</View>
 	);
 }

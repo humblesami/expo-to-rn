@@ -18,9 +18,6 @@ export default function MenuScreen({navigation}){
                 <Button onPress={()=>{navigation.navigate('AboutStack')}} title='Basic Elements Stack' style={styles.bt1} />
             </View>
             <View style={{padding: 10}}>
-                <Button onPress={()=>{navigation.navigate('AboutTab')}} title='Basic Elements Tab' style={styles.bt1} />
-            </View>
-            <View style={{padding: 10}}>
                 <Button onPress={()=>{navigation.navigate('ListStack')}} title='List' style={styles.bt1} />
             </View>
         </View>

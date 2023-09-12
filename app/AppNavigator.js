@@ -10,15 +10,19 @@ import MenuScreen from './Screens/MenuScreen';
 import LocationScreen from './Screens/LocationScreen';
 import AboutSreen from './Screens/AboutSreen';
 import ListingScreen from './Screens/ListScreen';
-import TestingScreen from './Screens/TestingScreen';
+import StateChangeonFocus from './Screens/TestingScreen';
+import NotificationScreen from './Notifications/Example';
+import { NavigationContainer } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
+
 
 const StackNavigator1 = () => {
     return (
         <Stack1.Navigator initialRouteName='MenuStack' screenOptions={{ headerShown: true }}>            
             <Stack1.Screen name="AboutStack" component={AboutSreen} />
+            <Stack1.Screen name="Notifications" component={NotificationScreen} />
             <Stack1.Screen name="MenuStack" component={MenuScreen} />
-            <Stack1.Screen name="ListStack" component={ListingScreen} />            
+            <Stack1.Screen name="ListStack" component={ListingScreen} />
             <Stack1.Screen name="Location" component={LocationScreen} />
         </Stack1.Navigator>
     )
@@ -32,7 +36,7 @@ function get_tab_options(label, icon='home', color1 = 'green', tbb = 0) {
         tabBarShowLabel: true,
         tabBarLabelStyle: { color: color1 },
         tabBarLabel: label,
-        tabBarIcon: () => (<Ionicons size={20} name={icon}/>),
+        tabBarIcon: () => <Ionicons name={icon} size={20} color={color1} />,
         tabBarIconStyle: { border: 1 }
     }
     if (tbb) {
@@ -44,15 +48,17 @@ function get_tab_options(label, icon='home', color1 = 'green', tbb = 0) {
 const TabNavigator1 = () => {    
     return(
         <Tab1.Navigator>
-            <Tab1.Screen name="TestTab" component={TestingScreen} options={get_tab_options('TestingTab', 'timer')}  />
+            <Tab1.Screen name="TestTab" component={StateChangeonFocus} options={get_tab_options('ChanginStateApi', 'timer')}  />
             <Tab1.Screen name="MenuTab" component={StackNavigator1} options={get_tab_options('Main Menu', 'menu')}  />
-            <Tab1.Screen name="AboutTab" component={AboutSreen} options={get_tab_options('AboutTab', 'heart')}  />                        
+            <Tab1.Screen name="Notifications" component={NotificationScreen} options={get_tab_options('Notifications', 'heart')}  />                        
         </Tab1.Navigator>
     );
 }
 
 export default function AppWithBottomTabs() {
     return (
-        <TabNavigator1/>
+        <NavigationContainer>
+            <TabNavigator1/>
+        </NavigationContainer>
     )
 }

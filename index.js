@@ -1,3 +1,3 @@
 import { registerRootComponent } from 'expo';
-import App from './App';
-registerRootComponent(App);
+import AppWithBottomTabs from './app/AppNavigator';
+registerRootComponent(AppWithBottomTabs);

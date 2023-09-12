@@ -28,13 +28,10 @@ function AboutSreen({ navigation }) {
 				<Text>Image</Text>
 				<Image
 					source={require('../assets/images/download.jpeg')}
-					fadeDuration={0}
 					style={{ width: 50, height: 50 }}
 				/>
 				<Text>Icon</Text>
-				<Ionicons name='home' size={30} onPress={() => { navigation.navigate('MenuTab') }} />
-				<Ionicons name='menu' size={30} onPress={() => { navigation.navigate('MenuStack') }} />
-				<Ionicons name='home' size={30} onPress={() => { navigation.navigate('Location') }} />
+				<Ionicons name="menu" size={30} color="#900" onPress={() => { navigation.navigate('MenuTab') }} />
 			</View>
 		</View>
 	);
