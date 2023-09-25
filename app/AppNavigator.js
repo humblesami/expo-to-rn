@@ -11,18 +11,17 @@ import LocationScreen from './Screens/LocationScreen';
 import AboutSreen from './Screens/AboutSreen';
 import ListingScreen from './Screens/ListScreen';
 import StateChangeonFocus from './Screens/TestingScreen';
-import NotificationScreen from './Notifications/Example';
 
 
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
+import NotificationScreen from './Screens/NotificationScreen';
 
 
 const StackNavigator1 = () => {
     return (
         <Stack1.Navigator initialRouteName='MenuStack' screenOptions={{ headerShown: true }}>            
             <Stack1.Screen name="AboutStack" component={AboutSreen} />
-            <Stack1.Screen name="Notifications" component={NotificationScreen} />
             <Stack1.Screen name="MenuStack" component={MenuScreen} />
             <Stack1.Screen name="ListStack" component={ListingScreen} />
             <Stack1.Screen name="Location" component={LocationScreen} />
