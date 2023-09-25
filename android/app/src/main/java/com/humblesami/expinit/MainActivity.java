@@ -1,4 +1,4 @@
-package com.sam.expinit;
+package com.humblesami.expinit;
 
 import android.os.Build;
 import android.os.Bundle;

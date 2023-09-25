@@ -1,4 +1,4 @@
-package com.sam.expinit;
+package com.humblesami.expinit;
 
 import android.app.Application;
 import android.content.res.Configuration;

@@ -81,9 +81,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.sam.expinit'
+    namespace 'com.humblesami.expinit'
     defaultConfig {
-        applicationId 'com.sam.expinit'
+        applicationId 'com.humblesami.expinit'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
