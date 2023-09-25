@@ -23,21 +23,10 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./google-services.json",
       "package": "com.sam.expinit"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "platforms": ["ios", "android", "web"],
-    "useNextNotificationsApi": true,
-    "plugins_extra_suffix": [["expo-notifications",{"android": {"sound": true},"sounds": ["./android/app/src/main/res/s4.mp3"]}]],
-    "extra": {
-      "make_account_expo_dev":"https://expo.dev",  
-      "create_project_expo_dev":"https://expo.dev/accounts/username/projects",
-        "eas": {
-            "projectId": "26f4d197-24a3-488d-b176-37709261ea3d"
-        }
     }
   }
 }

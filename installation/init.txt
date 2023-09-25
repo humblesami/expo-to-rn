@@ -1,0 +1,4 @@
+yarn create-expo-app expinit
+cd expinit/
+yarn expo prebuild
+yarn run android
